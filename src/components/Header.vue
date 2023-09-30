@@ -28,9 +28,29 @@
         About Us
       </router-link>
 
+      <header-category-list />
+
       <header-search />
 
       <q-space />
+
+      <q-btn
+        :icon="matShoppingBasket"
+        color="none"
+        dense
+        fab-mini
+        unelevated
+        to="/"
+      />
+
+      <q-btn
+        :icon="matShoppingBasket"
+        color="none"
+        dense
+        fab-mini
+        unelevated
+        to="/"
+      />
 
       <q-btn
         :icon="matLogin"
@@ -45,19 +65,23 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { matLogin } from '@quasar/extras/material-icons';
+import { matLogin, matShoppingBasket, matDrafts } from '@quasar/extras/material-icons';
 import HeaderSearch from './HeaderSearch.vue';
+import HeaderCategoryList from './HeaderCategoryList.vue';
 
 export default defineComponent({
   name: 'HeaderComponent',
 
   components: {
     HeaderSearch,
+    HeaderCategoryList,
   },
 
   setup() {
     return {
       matLogin,
+      matShoppingBasket,
+      matDrafts,
     };
   },
 });
@@ -71,7 +95,11 @@ export default defineComponent({
   background-color: $main-red-color;
   .logo {
     text-decoration: none;
-    border: noen;
+    border: none;
+
+    .q-toolbar-title {
+      font-size: 125px !important;
+    }
   }
 
   a {

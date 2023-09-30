@@ -1,7 +1,10 @@
 <template>
-  <q-form class="row">
+  <q-form
+    class="row"
+    @submit.prevent="false"
+  >
     <q-input
-      v-model="undefined"
+      v-model="inputValue"
       rounded
       color="white"
       label-color="white"
@@ -20,28 +23,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { matSearch } from '@quasar/extras/material-icons';
 
 export default defineComponent({
   name: 'HeaderSearchComponent',
 
   setup() {
+    const inputValue = ref<string>('');
+
     return {
       matSearch,
+      inputValue,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-@import "../css/app.scss";
+@import '../css/app.scss';
 .q-input {
-    width: 550px;
-    font-size: 17px;
+  width: 550px;
+  font-size: 17px;
 }
 
 .q-btn {
-    @include link(15px);
+  @include link(15px);
 }
 </style>
