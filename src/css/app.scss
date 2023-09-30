@@ -1,0 +1,80 @@
+@import "./quasar.variables";
+
+@mixin active-link($font-size) {
+  &.active {
+    color: black;
+    border-color: #fff;
+    text-decoration: underline;
+
+    &::first-letter {
+      font-size: 30px;
+    }
+  }
+}
+
+@mixin link($font-size) {
+  margin-right: 10px;
+  color: #fff;
+  font-size: 25px;
+  border: solid 2px rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  padding: 10px 15px;
+  transition: $transition;
+
+  &:hover {
+    border-color: #fff;
+    border-radius: 5px;
+  }
+
+  @include active-link($font-size + 5);
+}
+
+@mixin middle-underline($font-size, $color, $line-color, $transition) {
+  color: $color;
+  text-decoration: none;
+  font-size: $font-size;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 50%;
+    bottom: 0;
+    background-color: $line-color;
+    transition: $transition;
+  }
+
+  &::before {
+    left: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  &::after {
+    right: 0;
+    transform-origin: right;
+    transform: scaleX(0);
+  }
+
+  &:hover::before {
+    transform: scaleX(1);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@mixin active-link($font-size) {
+  &.active {
+    color: black;
+    border-color: #fff;
+    text-decoration: underline;
+
+    &::first-letter {
+      font-size: 30px;
+    }
+  }
+}
