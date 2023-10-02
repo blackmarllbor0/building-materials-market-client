@@ -5,7 +5,7 @@
   >
     <q-toolbar>
       <router-link
-        to="/"
+        to="/home"
         class="logo"
       >
         <q-toolbar-title class="text-bold">
@@ -16,7 +16,7 @@
       <q-space />
 
       <router-link
-        to="/"
+        to="/home"
         exact-active-class="active"
       >
         Home
@@ -35,7 +35,7 @@
       <q-space />
 
       <q-btn
-        :icon="matShoppingBasket"
+        :icon="matDrafts"
         color="none"
         dense
         fab-mini
@@ -63,33 +63,16 @@
     </q-toolbar>
   </q-header>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+
+<script lang="ts" setup>
 import { matLogin, matShoppingBasket, matDrafts } from '@quasar/extras/material-icons';
 import HeaderSearch from './HeaderSearch.vue';
-import HeaderCategoryList from './HeaderCategoryList.vue';
-
-export default defineComponent({
-  name: 'HeaderComponent',
-
-  components: {
-    HeaderSearch,
-    HeaderCategoryList,
-  },
-
-  setup() {
-    return {
-      matLogin,
-      matShoppingBasket,
-      matDrafts,
-    };
-  },
-});
+import HeaderCategoryList from './HeaderCategoryDropList.vue';
 </script>
 
 <style scoped lang="scss">
-@import "../css//app.scss";
-@import "../css/quasar.variables.scss";
+@import "../../css//app.scss";
+@import "../../css/quasar.variables.scss";
 
 .app-header {
   background-color: $main-red-color;

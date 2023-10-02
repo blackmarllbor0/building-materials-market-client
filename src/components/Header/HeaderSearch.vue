@@ -22,26 +22,15 @@
   </q-form>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
 import { matSearch } from '@quasar/extras/material-icons';
 
-export default defineComponent({
-  name: 'HeaderSearchComponent',
-
-  setup() {
-    const inputValue = ref<string>('');
-
-    return {
-      matSearch,
-      inputValue,
-    };
-  },
-});
+const inputValue = ref<string>('');
 </script>
 
 <style lang="scss" scoped>
-@import '../css/app.scss';
+@import '../../css/app.scss';
 .q-input {
   width: 550px;
   font-size: 17px;

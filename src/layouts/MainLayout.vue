@@ -7,14 +7,6 @@
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HeaderComponent from 'src/components/Header.vue';
-
-export default defineComponent({
-  name: 'MainLayout',
-  components: {
-    HeaderComponent,
-  },
-});
+<script lang="ts" setup>
+import HeaderComponent from 'src/components/Header/HeaderComponent.vue';
 </script>

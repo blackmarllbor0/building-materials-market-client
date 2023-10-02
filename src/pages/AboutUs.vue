@@ -235,14 +235,6 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'AboutUsPage',
-});
-</script>
-
 <style lang="scss" scoped>
 @import '../css/quasar.variables.scss';
 @import '../css/app.scss';

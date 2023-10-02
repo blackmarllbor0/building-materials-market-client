@@ -27,22 +27,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { useRouter } from 'vue-router';
 
-export default defineComponent({
-  name: 'ErrorNotFound',
+const router = useRouter();
 
-  setup() {
-    const router = useRouter();
-    const goBack = () => {
-      router.go(-1);
-    };
-
-    return {
-      goBack,
-    };
-  },
-});
+const goBack = () => {
+  router.go(-1);
+};
 </script>

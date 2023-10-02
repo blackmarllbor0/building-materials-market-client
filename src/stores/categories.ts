@@ -2,10 +2,10 @@ import { defineStore } from 'pinia';
 import { api, OffsetLimit } from 'src/boot/axios';
 
 export interface Category {
-    id: number;
-    name: string;
-    // createDate: Date;
-    // updateDate: Date;
+  id: number;
+  name: string;
+  createDate: Date;
+  updateDate: Date;
 }
 
 const path = '/categories';
@@ -13,10 +13,14 @@ const path = '/categories';
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
     categories: [] as Category[],
+    activeSortCategory: '',
   }),
   getters: {
-    getAll: (state) => state.categories,
-    getCategoriesNames: ({ categories }) => categories.map(({ name }) => name),
+    getAll: ({ categories }) => categories,
+    getCategoriesNames: ({ categories }) => categories.length
+      ? categories.map(({ name }) => name)
+      : ['Categories Not Found'],
+    getCategoriesCount: ({ categories: { length } }) => length || 0,
   },
   actions: {
     async fetchCategories(offsetLimit?: OffsetLimit) {
@@ -31,6 +35,9 @@ export const useCategoriesStore = defineStore('categories', {
           console.error(e.message);
         }
       }
+    },
+    setActiveSearchCategory(activeCategory: string) {
+      this.activeSortCategory = activeCategory;
     },
   },
 });

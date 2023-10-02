@@ -56,6 +56,7 @@ module.exports = {
     'max-classes-per-file': 'off',
     'no-console': 'off',
     'operator-linebreak': 'off',
+    "no-confusing-arrow": 'off',
 
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'error',
