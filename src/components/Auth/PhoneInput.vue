@@ -7,7 +7,7 @@
     :rules="phoneNumberValidators"
     color="white"
     class="log-in"
-    mask="+# (###) ### ## ##"
+    mask="+7 (###) ### ## ##"
     fill-mask
     hint="+7 (###) ### ## ##"
   />
