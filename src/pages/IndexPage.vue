@@ -1,3 +1,9 @@
 <template>
-  <q-page class="row items-center justify-evenly" />
+  <q-page class="q-px-xl">
+    <product-list />
+  </q-page>
 </template>
+
+<script lang="ts" setup>
+import ProductList from 'src/components/Products/ProductList.vue';
+</script>

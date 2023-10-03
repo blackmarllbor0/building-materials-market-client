@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia';
+
 export interface User {
   id: number;
   categoryId: number;
@@ -7,3 +9,14 @@ export interface User {
   createDate: Date;
   updateDate: Date;
 }
+
+export const useUserStore = defineStore('users', {
+  state: () => ({
+    isRegistered: false,
+  }),
+  actions: {
+    setUserRegisterStatus(status: boolean) {
+      this.isRegistered = status;
+    },
+  },
+});
