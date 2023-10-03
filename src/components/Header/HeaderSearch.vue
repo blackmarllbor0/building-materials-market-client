@@ -32,11 +32,11 @@ const inputValue = ref<string>('');
 <style lang="scss" scoped>
 @import '../../css/app.scss';
 .q-input {
-  width: 550px;
+  width: 400px;
   font-size: 17px;
 }
 
 .q-btn {
-  @include link(15px);
+  @include link(10px);
 }
 </style>

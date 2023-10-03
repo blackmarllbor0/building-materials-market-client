@@ -12,8 +12,11 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { useCategoriesStore } from 'src/stores/categories';
+import { useProductsStore } from 'src/stores/products';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
+
+const productsStore = useProductsStore();
 
 const categoryStore = useCategoriesStore();
 const { getCategoriesNames } = storeToRefs(categoryStore);
@@ -29,11 +32,12 @@ onMounted(async () => {
   });
 });
 
-const choiceCategory = (updatedCategory: string) => {
+const choiceCategory = async (updatedCategory: string) => {
   if (updatedCategory === 'Show All Categories') {
     router.push('/categories');
   } else {
-    categoryStore.setActiveSearchCategory(updatedCategory);
+    // const categoryId = await categoryStore.getCategoryIdByName(updatedCategory);
+    // await productsStore.fetchProducts(undefined, categoryId);
     router.push('/home');
   }
 };
@@ -52,12 +56,13 @@ const choiceCategory = (updatedCategory: string) => {
   }
 
   span {
-    font-size: 15px;
+    font-size: 14px;
+    padding-top: 5px;
+    color: #000;
   }
 
   .q-field__label  {
-    font-size: 25px;
-    padding-bottom: 10px;
+    font-size: 18px;
   }
 
   .q-icon {

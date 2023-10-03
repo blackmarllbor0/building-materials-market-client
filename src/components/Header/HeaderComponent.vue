@@ -40,17 +40,10 @@
         dense
         fab-mini
         unelevated
-        to="/"
+        @click="crate1000Categories"
       />
 
-      <q-btn
-        :icon="matShoppingBasket"
-        color="none"
-        dense
-        fab-mini
-        unelevated
-        to="/"
-      />
+      <shopping-basket />
 
       <q-btn
         :icon="matLogin"
@@ -65,9 +58,21 @@
 </template>
 
 <script lang="ts" setup>
-import { matLogin, matShoppingBasket, matDrafts } from '@quasar/extras/material-icons';
+import { matLogin, matDrafts } from '@quasar/extras/material-icons';
+import ShoppingBasket from 'src/components/Orders/ShoppingBasket.vue';
+import { api } from 'src/boot/axios';
 import HeaderSearch from './HeaderSearch.vue';
 import HeaderCategoryList from './HeaderCategoryDropList.vue';
+
+// const crate1000Categories = async () => {
+//   // eslint-disable-next-line no-plusplus
+//   for (let i = 0; i < 1000; i++) {
+//     // eslint-disable-next-line no-await-in-loop
+//     await api.post('/categories', {
+//       name: Math.floor(Math.random() * (1000 - 1) + 1).toString(),
+//     });
+//   }
+// };
 </script>
 
 <style scoped lang="scss">
@@ -79,14 +84,10 @@ import HeaderCategoryList from './HeaderCategoryDropList.vue';
   .logo {
     text-decoration: none;
     border: none;
-
-    .q-toolbar-title {
-      font-size: 125px !important;
-    }
   }
 
   a {
-    @include link(15px);
+    @include link(18px);
   }
 }
  </style>
