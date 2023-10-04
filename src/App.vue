@@ -18,7 +18,7 @@ html {
 
   body {
     &::-webkit-scrollbar {
-      width: 1px;
+      width: 0;
     }
 
     .q-page {

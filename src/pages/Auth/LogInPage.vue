@@ -99,7 +99,7 @@ const logIn = async () => {
   isValidForms.value.push(stringValidator(password.value, passwordValidators));
 
   if (!isValidForms.value.filter((isValid) => !isValid).length) {
-    const body: {[key: string]: string} = { password: password.value };
+    const body: { [key: string]: string } = { password: password.value };
     if (logInMethod.value === 'email') {
       body.email = email.value;
     } else {
@@ -114,7 +114,7 @@ const logIn = async () => {
         ?.[1];
     } catch (error) {
       if (isAxiosError(error)) {
-        console.log(error);
+        console.error(error);
       }
     }
   }

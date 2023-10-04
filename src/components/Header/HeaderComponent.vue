@@ -28,9 +28,23 @@
         About Us
       </router-link>
 
-      <header-category-list />
+      <router-link
+        to="/categories"
+        exact-active-class="active"
+      >
+        Categories
+      </router-link>
 
-      <header-search />
+      <q-space />
+
+      <search-input
+        label="Search"
+        btn-color="none"
+        color="white"
+        label-color="white"
+        width="400px"
+        font-size="17px"
+      />
 
       <q-space />
 
@@ -40,7 +54,6 @@
         dense
         fab-mini
         unelevated
-        @click="crate1000Categories"
       />
 
       <shopping-basket />
@@ -58,29 +71,18 @@
 </template>
 
 <script lang="ts" setup>
-import { matLogin, matDrafts } from '@quasar/extras/material-icons';
+import { matDrafts, matLogin } from '@quasar/extras/material-icons';
 import ShoppingBasket from 'src/components/Orders/ShoppingBasket.vue';
-import { api } from 'src/boot/axios';
-import HeaderSearch from './HeaderSearch.vue';
-import HeaderCategoryList from './HeaderCategoryDropList.vue';
-
-// const crate1000Categories = async () => {
-//   // eslint-disable-next-line no-plusplus
-//   for (let i = 0; i < 1000; i++) {
-//     // eslint-disable-next-line no-await-in-loop
-//     await api.post('/categories', {
-//       name: Math.floor(Math.random() * (1000 - 1) + 1).toString(),
-//     });
-//   }
-// };
+import SearchInput from 'components/Inputs/SearchInput.vue';
 </script>
 
 <style scoped lang="scss">
-@import "../../css//app.scss";
-@import "../../css/quasar.variables.scss";
+@import "src/css/app";
+@import "src/css/quasar.variables.scss";
 
 .app-header {
   background-color: $main-red-color;
+
   .logo {
     text-decoration: none;
     border: none;
@@ -90,4 +92,4 @@ import HeaderCategoryList from './HeaderCategoryDropList.vue';
     @include link(18px);
   }
 }
- </style>
+</style>
