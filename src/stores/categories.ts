@@ -5,11 +5,17 @@ import { api, OffsetLimit } from 'src/boot/axios';
 export interface Category {
   id: number;
   name: string;
+  categoryTypeId: number;
   createDate: Date;
   updateDate: Date;
 }
 
 const path = '/categories';
+
+interface CategoryParams {
+  offsetLimit?: OffsetLimit;
+  categoryTypeId?: number;
+}
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -23,9 +29,14 @@ export const useCategoriesStore = defineStore('categories', {
     getCategoriesCount: ({ categories: { length } }) => length || 0,
   },
   actions: {
-    async fetchCategories(offsetLimit?: OffsetLimit) {
+    async fetchCategories(params?: CategoryParams) {
       try {
-        const { data } = await api.get<Category[]>(path, { params: offsetLimit });
+        const { data } = await api.get<Category[]>(path, {
+          params: {
+            ...params?.offsetLimit,
+            ...params,
+          },
+        });
         this.categories = data;
       } catch (error) {
         if (error instanceof Error) {

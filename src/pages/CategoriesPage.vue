@@ -1,22 +1,24 @@
 <template>
   <q-page class="q-px-xl">
-    <h3
-      v-for="({ name, id}) in getAll"
-      :key="id"
-    >
-      {{ name }}
-    </h3>
+    <div class="categories ">
+      <category-types-list />
+      <categories-list />
+    </div>
   </q-page>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import { useCategoriesStore } from 'src/stores/categories';
-import { storeToRefs } from 'pinia';
-
-const categoriesStore = useCategoriesStore();
-const { getAll } = storeToRefs(categoriesStore);
-
-onMounted(async () => categoriesStore.fetchCategories());
-
+import CategoryTypesList from 'components/Categories/CategoryTypesList.vue';
+import CategoriesList from 'components/Categories/CategoriesList.vue';
 </script>
+
+<style lang="scss" scoped>
+.q-page {
+  overflow: hidden !important;
+  padding: 0 250px !important;
+}
+
+.categories {
+  display: flex !important;
+}
+</style>
