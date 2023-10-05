@@ -27,7 +27,9 @@
 import { matSearch } from '@quasar/extras/material-icons';
 import { ref } from 'vue';
 
-const { labelColor, btnColor, color } = defineProps<{
+const {
+  labelColor, btnColor, color,
+} = defineProps<{
   btnColor?: string,
   labelColor?: string,
   color?: string,

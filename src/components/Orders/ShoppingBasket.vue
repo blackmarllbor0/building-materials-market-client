@@ -21,3 +21,11 @@ const showBasketProducts = async () => {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "src/css/app";
+
+button {
+  @include link(18px);
+}
+</style>
