@@ -3,10 +3,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
+import { useUserStore } from 'stores/users';
 
 export default defineComponent({
   name: 'App',
+
+  setup() {
+    const userStore = useUserStore();
+
+    onMounted(async () => {
+      await userStore.authUser();
+    });
+  },
 });
 </script>
 
