@@ -34,12 +34,20 @@
             class="user-already-exist-msg"
           >Ups... User with this data already exist</span>
 
-          <q-btn
-            style="color: red"
-            padding="10px 50px"
-            label="Register"
+          <default-btn
+            title="Register"
             outline
+            color="red"
+            bg-color="white"
             @click="registerNewUser"
+          />
+
+          <default-btn
+            title="Log In"
+            to="/log-in"
+            color="red"
+            bg-color="white"
+            outline
           />
         </div>
       </q-form>
@@ -53,7 +61,6 @@ import PhoneInput from 'src/components/Auth/PhoneInput.vue';
 import PasswordInput from 'src/components/Auth/PasswordInput.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { api } from 'src/boot/axios';
 import { stringValidator } from 'src/validators/stringValidator';
 import { nameValidators } from 'src/validators/name';
 import { emailValidators } from 'src/validators/email';
@@ -61,6 +68,7 @@ import { phoneNumberValidators } from 'src/validators/phoneNumber';
 import { passwordValidators } from 'src/validators/password';
 import { isAxiosError } from 'axios';
 import { useUserStore } from 'src/stores/users';
+import DefaultBtn from 'components/Buttons/DefaultBtn.vue';
 
 const userStore = useUserStore();
 
@@ -84,15 +92,13 @@ const registerNewUser = async () => {
 
   if (!isValidForms.value.filter((isValid) => !isValid).length) {
     try {
-      await api.post('/users', {
+      await userStore.register({
         name: name.value,
         email: email.value,
         phoneNumber: phoneNumber.value,
         password: password.value,
       });
-
-      userStore.setUserRegisterStatus(true);
-      router.push('/log-in');
+      await router.push('/log-in');
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 409) {
         registerError.value = true;
@@ -111,6 +117,10 @@ const registerNewUser = async () => {
   border: 1px solid #000;
   border-radius: 15px;
   width: 450px;
+
+  button, a {
+    padding: 10px 50px;
+  }
 
   .register-form {
     margin: 15px 0;

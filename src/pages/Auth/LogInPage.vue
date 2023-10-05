@@ -16,7 +16,7 @@
         class="q-gutter-md log-in-form"
       >
         <span
-          v-if="isRegistered"
+          v-if="userIsAuth"
           class="user-registered row flex-center"
         >Successfully Registration</span>
 
@@ -32,22 +32,29 @@
 
         <password-input v-model="password" />
 
+        <span
+          v-if="logInError"
+          class="text-red flex flex-center"
+        >Oh... Incorrect credentials entered</span>
+
         <div
           class="row flex-center"
           style="gap: 1rem;"
         >
-          <q-btn
-            style="color: red"
+          <default-btn
+            color="red"
+            bg-color="white"
             padding="10px 50px"
-            label="Log-in"
             outline
+            title="Log-in"
             @click="logIn"
           />
 
-          <q-btn
-            style="color: red"
+          <default-btn
+            color="red"
+            bg-color="white"
             padding="10px 50px"
-            label="Register"
+            title="Register"
             outline
             to="/register"
           />
@@ -68,24 +75,25 @@ import { stringValidator } from 'src/validators/stringValidator';
 import { emailValidators } from 'src/validators/email';
 import { phoneNumberValidators } from 'src/validators/phoneNumber';
 import { passwordValidators } from 'src/validators/password';
-import { api } from 'src/boot/axios';
+import { useRouter } from 'vue-router';
+import DefaultBtn from 'components/Buttons/DefaultBtn.vue';
+import { LogInBody } from 'src/requests/user';
 import { isAxiosError } from 'axios';
 
+const router = useRouter();
+
 const userStore = useUserStore();
-const { isRegistered } = storeToRefs(userStore);
+const { userIsAuth, currentUser } = storeToRefs(userStore);
 
 const logInMethod = ref<'email' | 'phoneNumber'>('email');
-const email = ref<string>('3100194@gmail.com');
-const phoneNumber = ref<string>('');
-const password = ref<string>('Blackmarllbor_0');
+
+const email = ref<string>(currentUser.value.email);
+const phoneNumber = ref<string>(currentUser.value.phoneNumber);
+const password = ref<string>('');
 
 const isValidForms = ref<boolean[]>([]);
 
-// We reset the registration status to false
-// in any case so as not to display the registration message.
-setTimeout(() => {
-  userStore.setUserRegisterStatus(false);
-}, 3000);
+const logInError = ref<boolean>(false);
 
 const logIn = async () => {
   isValidForms.value = [];
@@ -99,22 +107,20 @@ const logIn = async () => {
   isValidForms.value.push(stringValidator(password.value, passwordValidators));
 
   if (!isValidForms.value.filter((isValid) => !isValid).length) {
-    const body: { [key: string]: string } = { password: password.value };
+    const body: LogInBody = { password: password.value };
     if (logInMethod.value === 'email') {
       body.email = email.value;
     } else {
       body.phoneNumber = phoneNumber.value;
     }
+
     try {
-      const res = await api.post('/auth/log-in', body);
-      const cookieName = 'Authorization';
-      const cookie = (res.headers['set-cookie'] as string[])
-        .find((c) => c.includes(cookieName))
-        ?.match(new RegExp(`^${cookieName}=(.+?);`))
-        ?.[1];
+      await userStore.loginUser(body);
+
+      await router.push('/home');
     } catch (error) {
-      if (isAxiosError(error)) {
-        console.error(error);
+      if (isAxiosError(error) && error.status !== 500) {
+        logInError.value = true;
       }
     }
   }
