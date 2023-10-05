@@ -1,6 +1,5 @@
-/* eslint-disable consistent-return */
 import { defineStore } from 'pinia';
-import { api, OffsetLimit } from 'src/boot/axios';
+import { CategoryParams, useCategoryRequests } from 'src/requests/category';
 
 export interface Category {
   id: number;
@@ -10,12 +9,7 @@ export interface Category {
   updateDate: Date;
 }
 
-const path = '/categories';
-
-interface CategoryParams {
-  offsetLimit?: OffsetLimit;
-  categoryTypeId?: number;
-}
+const categoryRequest = useCategoryRequests();
 
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
@@ -30,37 +24,7 @@ export const useCategoriesStore = defineStore('categories', {
   },
   actions: {
     async fetchCategories(params?: CategoryParams) {
-      try {
-        const { data } = await api.get<Category[]>(path, {
-          params: {
-            ...params?.offsetLimit,
-            ...params,
-          },
-        });
-        this.categories = data;
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
-      }
-    },
-    async getCategoryById(id: number) {
-      try {
-        const { data } = await api.get<Category>(`${path}/${id}`);
-        return data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async getCategoryIdByName(name: string) {
-      try {
-        const { data } = await api.get<Category[]>(path, { params: { categoryName: name } });
-        const { id } = data[0];
-
-        return id;
-      } catch (error) {
-        console.error(error);
-      }
+      this.categories = await categoryRequest.getAll(params);
     },
   },
 });

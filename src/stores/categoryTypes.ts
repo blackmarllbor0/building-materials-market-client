@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { api, OffsetLimit } from 'src/boot/axios';
+import { CategoryTypeParams, useCategoryTypeRequest } from 'src/requests/categoryType';
 
 export interface CategoryType {
   id: number;
@@ -8,29 +8,15 @@ export interface CategoryType {
   updateDate: Date;
 }
 
-const path = 'category-types';
-
-interface Params {
-  offsetLimit?: OffsetLimit,
-  categoryTypeName?: string,
-  categoryTypeId?: number,
-}
+const categoryTypeRequest = useCategoryTypeRequest();
 
 export const useCategoryTypesStore = defineStore('categoryTypes', {
   state: () => ({
     categoryTypes: [] as CategoryType[],
   }),
   actions: {
-    async fetchAllCategoryTypes(params?: Params) {
-      try {
-        const { data } = await api.get(path, {
-          params: { ...params.offsetLimit, ...params },
-        });
-
-        this.categoryTypes = data;
-      } catch (error) {
-        console.error(error);
-      }
+    async fetchAllCategoryTypes(params?: CategoryTypeParams) {
+      this.categoryTypes = await categoryTypeRequest.getAll(params);
     },
   },
 });

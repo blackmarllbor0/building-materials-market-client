@@ -13,7 +13,10 @@ export interface OffsetLimit {
   limit?: number;
 }
 
-const api = axios.create({ baseURL: process.env.BASE_BACKEND_URL });
+const api = axios.create({
+  baseURL: process.env.BASE_BACKEND_URL,
+  withCredentials: true,
+});
 
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios;
