@@ -21,7 +21,7 @@
             Settings
           </div>
           <default-btn
-            title="user data"
+            title="account management"
             color="red"
             bg-color="white"
             style="border-radius: 15px"
