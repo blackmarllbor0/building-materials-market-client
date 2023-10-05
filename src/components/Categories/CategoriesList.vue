@@ -29,9 +29,12 @@ import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 import SearchInput from 'components/Inputs/SearchInput.vue';
 import { useRouter } from 'vue-router';
+import { useCategoryRequests } from 'src/requests/category';
 
 const categoriesStore = useCategoriesStore();
 const { categories } = storeToRefs(categoriesStore);
+
+const categoryRequest = useCategoryRequests();
 
 const router = useRouter();
 
@@ -43,7 +46,7 @@ const inputValue = ref<string>('');
 
 const searchProductsByCategory = async () => {
   try {
-    const categoryId = await categoriesStore.getCategoryIdByName(inputValue.value);
+    const categoryId = await categoryRequest.getCategoryIdByName(inputValue.value);
 
     await router.push(`/home?categoryId=${categoryId}`);
   } catch (error) {

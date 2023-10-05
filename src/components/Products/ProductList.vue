@@ -35,17 +35,18 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
-import { Product, useProductsStore } from 'src/stores/products';
+import { Product } from 'src/stores/products';
 import LoaderComponent from 'src/components/Loader/LoaderComponent.vue';
 import { useRoute } from 'vue-router';
 import ProductsListSkeleton from 'components/Products/ProductsListSkeleton.vue';
+import { useProductsRequests } from 'src/requests/products';
 import ProductCart from './ProductCart.vue';
 
 const route = useRoute();
 
-const productsStore = useProductsStore();
-const products = ref<Product[]>([]);
+const productRequest = useProductsRequests();
 
+const products = ref<Product[]>([]);
 const limit = ref<number>(12);
 const offset = ref<number>(0);
 
@@ -58,14 +59,27 @@ onMounted(() => {
   limit.value = 12;
 });
 
-// eslint-disable-next-line @typescript-eslint/no-shadow
-const loadProducts = async (offset: number, limit: number) => productsStore.lazyFetchProducts({
-  offsetLimit: { offset, limit },
-  categoryId: route.query && route.query.categoryId ? +route.query.categoryId : undefined,
+watch(() => route.query, async () => {
+  if (route.path === '/home') {
+    offset.value = 0;
+    limit.value = 12;
+    products.value = await productRequest.getAll({
+      offsetLimit: {
+        offset: offset.value,
+        limit: limit.value,
+      },
+    });
+  }
 });
 
 const infiniteScroll = async (index: number, done: (stop: boolean) => void) => {
-  const loaderProducts = await loadProducts(offset.value, limit.value);
+  const loaderProducts = await productRequest.getAll({
+    offsetLimit: {
+      offset: offset.value,
+      limit: limit.value,
+    },
+    categoryId: route.query && route.query.categoryId ? +route.query.categoryId : undefined,
+  });
 
   isLoaded.value = false;
 
@@ -79,12 +93,4 @@ const infiniteScroll = async (index: number, done: (stop: boolean) => void) => {
 
   done(true);
 };
-
-watch(() => route.query, async () => {
-  if (route.path === '/home') {
-    offset.value = 0;
-    limit.value = 12;
-    products.value = await loadProducts(offset.value, limit.value) as Product[];
-  }
-});
 </script>

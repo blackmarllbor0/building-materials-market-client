@@ -48,7 +48,7 @@ const sortCategoriesByType = (categoryTypeId: number) => {
   border-top: none;
   border-bottom: none;
   max-width: 150px;
-  width: 100%;
+  width: 100vw;
 
   &::-webkit-scrollbar {
     width: 1px;

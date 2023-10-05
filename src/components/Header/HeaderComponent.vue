@@ -48,17 +48,12 @@
 
       <q-space />
 
-      <q-btn
-        :icon="matDrafts"
-        color="none"
-        dense
-        fab-mini
-        unelevated
-      />
+      <order-status />
 
       <shopping-basket />
 
       <q-btn
+        v-if="!userIsAuth"
         :icon="matLogin"
         to="/log-in"
         color="none"
@@ -66,14 +61,23 @@
         fab-mini
         unelevated
       />
+
+      <profile-menu-btn />
     </q-toolbar>
   </q-header>
 </template>
 
 <script lang="ts" setup>
-import { matDrafts, matLogin } from '@quasar/extras/material-icons';
+import { matLogin } from '@quasar/extras/material-icons';
 import ShoppingBasket from 'src/components/Orders/ShoppingBasket.vue';
 import SearchInput from 'components/Inputs/SearchInput.vue';
+import { useUserStore } from 'stores/users';
+import { storeToRefs } from 'pinia';
+import OrderStatus from 'components/Orders/OrderStatus.vue';
+import ProfileMenuBtn from 'components/Profile/ProfileMenuBtn.vue';
+
+const userStore = useUserStore();
+const { userIsAuth } = storeToRefs(userStore);
 </script>
 
 <style scoped lang="scss">
