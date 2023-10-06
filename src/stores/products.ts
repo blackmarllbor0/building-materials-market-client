@@ -21,7 +21,7 @@ export const useProductsStore = defineStore('products', {
     products: [] as Product[],
   }),
   actions: {
-    async fetchAllProducts(params?: ProductsParams) {
+    async fetchAllProducts(params: ProductsParams) {
       this.products = await productsRequest.getAll(params);
     },
   },

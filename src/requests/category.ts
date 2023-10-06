@@ -16,6 +16,11 @@ export const useCategoryRequests = () => ({
 
     return data as Category[];
   },
+  async getCategoryById(categoryId: number) {
+    const { data } = await api.get(`${path}/${categoryId}`);
+
+    return data as Category;
+  },
   async getCategoryIdByName(categoryName: string) {
     const { data } = await api.get(path, { params: { categoryName } });
     const { id } = data[0];

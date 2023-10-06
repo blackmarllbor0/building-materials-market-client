@@ -14,6 +14,15 @@ export interface LogInBody {
   password: string;
 }
 
+export interface UpdateUserBody {
+  name?: string,
+  email?: string,
+  phoneNumber?: string,
+  password?: string,
+  userStatusId?: number;
+  oldPassword: string;
+}
+
 const userPath = '/users';
 const authPath = '/auth';
 
@@ -35,5 +44,13 @@ export const useUserRequest = () => ({
   },
   async logOut() {
     await api.get(`${authPath}/log-out`);
+  },
+  async updateUser(id:number, updateBody: UpdateUserBody) {
+    const { data } = await api.patch(`${userPath}/${id}`, updateBody);
+
+    return data as User;
+  },
+  async deleteUser(id: number, oldPassword: string) {
+    await api.patch(`${userPath}/${id}`, { isDeleted: 1, oldPassword });
   },
 });
