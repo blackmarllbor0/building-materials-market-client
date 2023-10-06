@@ -5,12 +5,30 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/home', component: () => import('pages/IndexPage.vue') },
+      { path: '/products', component: () => import('pages/IndexPage.vue') },
       { path: '/about-us', component: () => import('pages/AboutUs.vue') },
       { path: '/categories', component: () => import('pages/CategoriesPage.vue') },
-      { path: '/log-in', component: () => import('pages/Auth/LogInPage.vue') },
-      { path: '/register', component: () => import('pages/Auth/RegisterPage.vue') },
-      { path: '/profile', component: () => import('pages/ProfilePage.vue') },
+      // { path: '/'}
+      {
+        path: '/log-in',
+        meta: { requiresAuth: false },
+        component: () => import('pages/Auth/LogInPage.vue'),
+      },
+      {
+        path: '/register',
+        meta: { requiresAuth: false },
+        component: () => import('pages/Auth/RegisterPage.vue'),
+      },
+      {
+        path: '/profile',
+        meta: { requiresAuth: true },
+        component: () => import('pages/ProfilePage.vue'),
+      },
+      {
+        path: '/profile/change',
+        meta: { requiresAuth: true },
+        component: () => import('pages/User/ChangeUserData.vue'),
+      },
     ],
   },
   {
