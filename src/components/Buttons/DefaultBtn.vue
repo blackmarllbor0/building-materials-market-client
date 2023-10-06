@@ -1,7 +1,7 @@
 <template>
   <q-btn
     :label="title"
-    :style="`background: ${bgColor}; color: ${color}`"
+    :style="`background: ${bgColor}; color: ${color}; width: auto`"
   />
 </template>
 

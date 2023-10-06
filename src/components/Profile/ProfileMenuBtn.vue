@@ -88,7 +88,7 @@ const router = useRouter();
 const logOut = async () => {
   await userStore.logOut();
 
-  await router.push('/home');
+  await router.push('/products');
 };
 </script>
 

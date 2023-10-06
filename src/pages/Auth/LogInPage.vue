@@ -117,7 +117,7 @@ const logIn = async () => {
     try {
       await userStore.loginUser(body);
 
-      await router.push('/home');
+      await router.push('/products');
     } catch (error) {
       if (isAxiosError(error) && error.status !== 500) {
         logInError.value = true;
