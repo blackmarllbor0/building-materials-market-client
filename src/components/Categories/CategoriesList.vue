@@ -8,17 +8,18 @@
       label="Search Categories"
       width="800px"
       font-size="17px"
-      style="background-color: white"
+      style="background-color: white; z-index: 2"
       @submit="searchProductsByCategory"
     />
     <div class="q-pa-xl q-gutter-xl row items-center justify-evenly categories-list">
-      <router-link
+      <default-btn
         v-for="({id, categoryTypeId}) in categories"
         :key="id"
-        :to="`home?categoryId=${id}`"
-      >
-        category-type-id {{ categoryTypeId }}
-      </router-link>
+        color="black"
+        bg-color="white"
+        :title="`Category Type Id - ${categoryTypeId}`"
+        @click="searchProductsByCategory"
+      />
     </div>
   </div>
 </template>
@@ -30,6 +31,7 @@ import { onMounted, ref } from 'vue';
 import SearchInput from 'components/Inputs/SearchInput.vue';
 import { useRouter } from 'vue-router';
 import { useCategoryRequests } from 'src/requests/category';
+import DefaultBtn from 'components/Buttons/DefaultBtn.vue';
 
 const categoriesStore = useCategoriesStore();
 const { categories } = storeToRefs(categoriesStore);
@@ -48,7 +50,7 @@ const searchProductsByCategory = async () => {
   try {
     const categoryId = await categoryRequest.getCategoryIdByName(inputValue.value);
 
-    await router.push(`/home?categoryId=${categoryId}`);
+    await router.push(`/products?categoryId=${categoryId}`);
   } catch (error) {
     console.error(error);
   }
@@ -66,11 +68,11 @@ const searchProductsByCategory = async () => {
     width: 1px;
   }
 
-  a {
+  button {
     @include link(15px);
     border: 1px solid $main-red-color;
     text-decoration: none !important;
-    color: #000;
+    z-index: 1;
 
     max-width: 150px;
     width: 100%;

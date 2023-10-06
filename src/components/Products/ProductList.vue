@@ -1,6 +1,6 @@
 <template>
   <q-infinite-scroll
-    :offset="250"
+    :offset="500"
     @load="infiniteScroll"
   >
     <div
@@ -40,6 +40,7 @@ import LoaderComponent from 'src/components/Loader/LoaderComponent.vue';
 import { useRoute } from 'vue-router';
 import ProductsListSkeleton from 'components/Products/ProductsListSkeleton.vue';
 import { useProductsRequests } from 'src/requests/products';
+import { isAxiosError } from 'axios';
 import ProductCart from './ProductCart.vue';
 
 const route = useRoute();
@@ -60,37 +61,42 @@ onMounted(() => {
 });
 
 watch(() => route.query, async () => {
-  if (route.path === '/home') {
-    offset.value = 0;
-    limit.value = 12;
-    products.value = await productRequest.getAll({
-      offsetLimit: {
-        offset: offset.value,
-        limit: limit.value,
-      },
-    });
+  if (route.path === '/products') {
+    window.location.reload();
   }
 });
 
 const infiniteScroll = async (index: number, done: (stop: boolean) => void) => {
-  const loaderProducts = await productRequest.getAll({
-    offsetLimit: {
-      offset: offset.value,
-      limit: limit.value,
-    },
-    categoryId: route.query && route.query.categoryId ? +route.query.categoryId : undefined,
-  });
+  try {
+    const categoryId = route.query && route.query.categoryId ? +route.query.categoryId : undefined;
 
-  isLoaded.value = false;
+    const loaderProducts = await productRequest.getAll({
+      offsetLimit: {
+        offset: offset.value,
+        limit: limit.value,
+      },
+      categoryId,
+    });
 
-  if (loaderProducts && loaderProducts.length) {
-    products.value.push(...loaderProducts as Product[]);
+    isLoaded.value = false;
+
+    products.value.push(...loaderProducts);
+
+    if (loaderProducts.length < 12) {
+      done(true);
+      return;
+    }
+
     offset.value = limit.value + 1;
     limit.value += 12;
-    done(false);
-    return;
-  }
 
-  done(true);
+    done(false);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      isLoaded.value = false;
+    } else {
+      console.error(error);
+    }
+  }
 };
 </script>

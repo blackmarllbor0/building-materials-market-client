@@ -37,7 +37,7 @@ import {
   defineProps, onMounted, ref, toRefs,
 } from 'vue';
 import DefaultBtn from 'src/components/Buttons/DefaultBtn.vue';
-import { Category, useCategoriesStore } from 'src/stores/categories';
+import { useCategoryRequests } from 'src/requests/category';
 
 const { product } = defineProps<{
   product: Product
@@ -47,12 +47,12 @@ const {
   title, description, price, categoryId,
 } = toRefs(product);
 
-const categoryStore = useCategoriesStore();
+const categoryRequest = useCategoryRequests();
 
 const categoryName = ref<string>('');
 
 onMounted(async () => {
-  const { name } = await categoryStore.getCategoryById(categoryId.value) as Category;
+  const { name } = await categoryRequest.getCategoryById(categoryId.value);
   categoryName.value = name;
 });
 

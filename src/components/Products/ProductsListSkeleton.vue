@@ -53,7 +53,7 @@ const router = useRouter();
 const show = ref<boolean>(true);
 
 const goBack = () => {
-  router.push('/home');
+  router.push('/products');
 };
 </script>
 <style scoped lang="scss">

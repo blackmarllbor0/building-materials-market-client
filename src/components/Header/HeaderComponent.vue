@@ -5,7 +5,7 @@
   >
     <q-toolbar>
       <router-link
-        to="/home"
+        to="/products"
         class="logo"
       >
         <q-toolbar-title class="text-bold">
@@ -16,7 +16,7 @@
       <q-space />
 
       <router-link
-        to="/home"
+        to="/products"
         exact-active-class="active"
       >
         Home
