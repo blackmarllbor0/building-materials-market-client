@@ -4,9 +4,15 @@
   >
     <q-pull-to-refresh @refresh="refresh">
       <div
+        class="q-mb-sm category-type row flex-center"
+        @click='getAll'
+      >
+        All
+      </div>
+      <div
         v-for="({id, name}) in categoryTypes"
         :key="id"
-        class="q-mb-sm category-type row flex-center"
+        class="q-mb-sm category-type row flex-center text-center"
         @click="sortCategoriesByType(id)"
       >
         {{ name }}
@@ -34,6 +40,10 @@ const refresh = (done: () => void) => {
   done();
 };
 
+const getAll = () => {
+  categoryStore.fetchCategories();
+};
+
 const sortCategoriesByType = (categoryTypeId: number) => {
   categoryStore.fetchCategories({ categoryTypeId });
 };
@@ -43,7 +53,7 @@ const sortCategoriesByType = (categoryTypeId: number) => {
 @import "src/css/quasar.variables";
 
 .category-types-list {
-  max-height: 88vh;
+  height: calc(92vh - 5px);
   border: 1px solid $main-red-color;
   border-top: none;
   border-bottom: none;

@@ -45,12 +45,13 @@
 
 <script setup lang="ts">
 import ClickedMessage from 'components/Dialogs/ClickedMessage.vue';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 
-const show = ref<boolean>(true);
+const show = computed(() => !!route.query.categoryId);
 
 const goBack = () => {
   router.push('/products');

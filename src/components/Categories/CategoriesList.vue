@@ -8,16 +8,16 @@
       label="Search Categories"
       width="800px"
       font-size="17px"
-      style="background-color: white; z-index: 2"
+      style="background-color: white; z-index: 2; margin-top: 15px;"
       @submit="searchProductsByCategory"
     />
-    <div class="q-pa-xl q-gutter-xl row items-center justify-evenly categories-list">
+    <div class="q-pa-xl q-gutter-xl row items-center justify-evenly category-links">
       <default-btn
-        v-for="({id, categoryTypeId}) in categories"
+        v-for="({ id, name }) in categories"
         :key="id"
         color="black"
         bg-color="white"
-        :title="`Category Type Id - ${categoryTypeId}`"
+        :title="name"
         @click="searchProductsByCategory"
       />
     </div>
@@ -63,19 +63,20 @@ const searchProductsByCategory = async () => {
 .categories-list {
   max-height: 88vh;
   overflow: auto;
+  align-content: flex-start;
 
   &::-webkit-scrollbar {
     width: 1px;
   }
 
-  button {
-    @include link(15px);
-    border: 1px solid $main-red-color;
-    text-decoration: none !important;
-    z-index: 1;
-
-    max-width: 150px;
-    width: 100%;
+  .category-links {
+    button {
+      @include link(15px);
+      border: 1px solid $main-red-color;
+      text-decoration: none !important;
+      flex-basis: calc(33.33% - 10px);
+      box-sizing: border-box;
+    }
   }
 }
 

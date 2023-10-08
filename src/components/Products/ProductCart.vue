@@ -6,20 +6,16 @@
     >
 
     <q-card-section>
-      <div class="text-h6">
+      <div class="text-h6 text-center">
         {{ title }}
       </div>
-      <div class="text-subtitle2">
-        {{ categoryName }}
+      <div class="text-subtitle2 text-center">
+        {{ description }}
       </div>
     </q-card-section>
 
-    <q-card-section class="q-pt-none">
-      {{ description }}
-      <p>{{ price }} tenge</p>
-
-      <p>categoryId {{ categoryId }}</p>
-
+    <q-card-section class="q-pt-none row justify-between buy-block">
+      <div class='text-h4'>{{ price }}$</div>
       <default-btn
         class="row flex-center"
         bg-color="red"
@@ -65,9 +61,11 @@ onMounted(async () => {
   width: 100%;
   max-width: 18vw;
   padding: 15px;
-  background-color: rgba($color: $main-red-color, $alpha: 0.2);
   cursor: pointer;
   border-radius: 15px;
+
+  flex-basis: calc(33.33% - 10px);
+  box-sizing: border-box;
 
   img {
     border-radius: 15px;

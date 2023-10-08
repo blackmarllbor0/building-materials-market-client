@@ -5,7 +5,7 @@
   >
     <div
       v-if="products.length"
-      class="q-pa-xl q-gutter-xl row items-center justify-evenly"
+      class="q-pa-xl q-gutter-xl row items-center justify-evenly products-list"
     >
       <product-cart
         v-for="(product) in products"
@@ -100,3 +100,9 @@ const infiniteScroll = async (index: number, done: (stop: boolean) => void) => {
   }
 };
 </script>
+
+<style scoped lang='scss'>
+.products-list {
+  align-content: flex-start;
+}
+</style>
