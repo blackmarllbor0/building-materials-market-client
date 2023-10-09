@@ -11,6 +11,7 @@ module.exports = {
     es2021: true,
     node: true,
     'vue/setup-compiler-macros': true,
+    "jest": true,
   },
 
   extends: [
@@ -24,6 +25,8 @@ module.exports = {
     'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
     'airbnb-base',
+
+    "plugin:cypress/recommended",
   ],
 
   plugins: [
