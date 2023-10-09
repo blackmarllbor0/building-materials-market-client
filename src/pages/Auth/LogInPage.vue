@@ -47,6 +47,7 @@
             padding="10px 50px"
             outline
             title="Log-in"
+            class="login-bnt"
             @click="logIn"
           />
 

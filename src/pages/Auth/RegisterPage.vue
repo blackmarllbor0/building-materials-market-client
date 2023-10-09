@@ -1,20 +1,11 @@
 <template>
   <q-page class="q-px-xl">
-    <div class="q-pa-md fixed-center register-block">
+    <div class="q-pa-md absolute-center register-block">
       <q-form
         class="q-gutter-md register-form column"
       >
         <span>Name:</span>
-        <q-input
-          v-model="name"
-          filled
-          label="Your Name"
-          lazy-rules
-          :rules="nameValidators"
-          color="white"
-          fill-mask
-          hint="Tony Stark"
-        />
+        <name-input v-model="name" />
 
         <span>Email:</span>
         <EmailInput v-model="email" />
@@ -39,6 +30,7 @@
             outline
             color="red"
             bg-color="white"
+            class="register-btn"
             @click="registerNewUser"
           />
 
@@ -69,6 +61,7 @@ import { passwordValidators } from 'src/validators/password';
 import { isAxiosError } from 'axios';
 import { useUserStore } from 'src/stores/users';
 import DefaultBtn from 'components/Buttons/DefaultBtn.vue';
+import NameInput from 'components/Auth/NameInput.vue';
 
 const userStore = useUserStore();
 

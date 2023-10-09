@@ -8,6 +8,7 @@
     color="white"
     :rules="passwordValidators"
     hint="Example: mrCmTF%Lz^Y*k#o@prjL2O"
+    class="password"
   />
 </template>
 

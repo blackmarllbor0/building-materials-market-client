@@ -6,7 +6,7 @@
     lazy-rules
     :rules="emailValidators"
     color="white"
-    class="log-in"
+    class="email"
     fill-mask
     hint="name@service.domen"
   />
