@@ -15,31 +15,23 @@ module.exports = {
   },
 
   extends: [
-    // 'eslint:recommended',
-
-    // ESLint typescript rules
     'plugin:@typescript-eslint/recommended',
-
-    'plugin:vue/vue3-essential', // Priority A: Essential (Error Prevention)
-    'plugin:vue/vue3-strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
-    'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
-
+    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-strongly-recommended',
+    'plugin:vue/vue3-recommended',
     'airbnb-base',
-
-    "plugin:cypress/recommended",
+    'plugin:cypress/recommended',
+    'plugin:storybook/recommended',
   ],
 
   plugins: [
-    // required to apply rules which need type information
     '@typescript-eslint',
-
-    // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
-    // required to lint *.vue files
     'vue',
+    "storybook"
   ],
 
   globals: {
-    ga: 'readonly', // Google Analytics
+    ga: 'readonly',
     cordova: 'readonly',
     __statics: 'readonly',
     __QUASAR_SSR__: 'readonly',
@@ -51,7 +43,6 @@ module.exports = {
     chrome: 'readonly',
   },
 
-  // add your custom rules here
   rules: {
     'no-param-reassign': 'off',
     'no-void': 'off',
@@ -78,7 +69,6 @@ module.exports = {
 
     quotes: ['warn', 'single', { avoidEscape: true }],
 
-    // this rule, if on, would require explicit return type on the `render` function
     '@typescript-eslint/explicit-function-return-type': 'off',
 
     '@typescript-eslint/no-var-requires': 'off',

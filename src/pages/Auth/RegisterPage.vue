@@ -30,7 +30,7 @@
             outline
             color="red"
             bg-color="white"
-            class="register-btn"
+            class="register-btn text"
             @click="registerNewUser"
           />
 
