@@ -18,7 +18,7 @@
         color="black"
         bg-color="white"
         :title="name"
-        @click="searchProductsByCategory"
+        @click="searchProductsByCategory(name)"
       />
     </div>
   </div>
@@ -46,9 +46,9 @@ onMounted(async () => {
 
 const inputValue = ref<string>('');
 
-const searchProductsByCategory = async () => {
+const searchProductsByCategory = async (categoryName?: string) => {
   try {
-    const categoryId = await categoryRequest.getCategoryIdByName(inputValue.value);
+    const categoryId = await categoryRequest.getCategoryIdByName(categoryName || inputValue.value);
 
     await router.push(`/products?categoryId=${categoryId}`);
   } catch (error) {

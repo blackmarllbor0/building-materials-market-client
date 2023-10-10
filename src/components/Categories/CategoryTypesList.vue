@@ -5,7 +5,7 @@
     <q-pull-to-refresh @refresh="refresh">
       <div
         class="q-mb-sm category-type row flex-center"
-        @click='getAll'
+        @click="getAll"
       >
         All
       </div>
