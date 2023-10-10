@@ -1,24 +1,26 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const rating = ref<number>(1);
-
-const { size } = defineProps<{ size: string }>();
-</script>
-
 <template>
   <q-rating
-    v-model="rating"
+    v-model="start"
     max="5"
-    :size="size"
-    color="yellow"
+    :size="props.size || '2em'"
+    :color="props.color || 'yellow'"
     icon="star_border"
     icon-selected="star"
+    icon-half="star_half"
     no-dimming
-    readonly
+    :readonly="props.readonly"
   />
 </template>
 
-<style scoped lang="scss">
+<script lang="ts" setup>
+import { ref } from 'vue';
 
-</style>
+const start = ref<number>(0);
+
+const props = defineProps<{
+  size?: string,
+  color?: string,
+  readonly?: boolean,
+}>();
+
+</script>

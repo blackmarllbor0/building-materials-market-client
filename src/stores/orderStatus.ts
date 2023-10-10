@@ -1,3 +1,3 @@
 export enum OrderStatusEnum {
-  created = 2,
+  created = 1,
 }

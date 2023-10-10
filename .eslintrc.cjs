@@ -11,7 +11,7 @@ module.exports = {
     es2021: true,
     node: true,
     'vue/setup-compiler-macros': true,
-    "jest": true,
+    jest: true,
   },
 
   extends: [
@@ -24,11 +24,7 @@ module.exports = {
     'plugin:storybook/recommended',
   ],
 
-  plugins: [
-    '@typescript-eslint',
-    'vue',
-    "storybook"
-  ],
+  plugins: ['@typescript-eslint', 'vue', 'storybook'],
 
   globals: {
     ga: 'readonly',
@@ -50,7 +46,9 @@ module.exports = {
     'max-classes-per-file': 'off',
     'no-console': 'off',
     'operator-linebreak': 'off',
-    "no-confusing-arrow": 'off',
+    'no-confusing-arrow': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'no-restricted-syntax': 'off',
 
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'error',

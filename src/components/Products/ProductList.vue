@@ -104,5 +104,6 @@ const infiniteScroll = async (index: number, done: (stop: boolean) => void) => {
 <style scoped lang='scss'>
 .products-list {
   align-content: flex-start;
+  align-items: stretch;
 }
 </style>

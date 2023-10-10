@@ -1,10 +1,11 @@
 import { api, OffsetLimit } from 'boot/axios';
 import { Order } from 'stores/orders';
+import { OrderStatusEnum } from 'stores/orderStatus';
 
 export interface OrderBody {
   userId: number;
   orderPaymentTypeId: number;
-  orderDetails?: {productId: number, quantity: number}[];
+  orderDetails?: {productId: number, quantity: number, price: number}[];
 }
 
 export interface OrderParams {
@@ -27,5 +28,9 @@ export const useOrderRequest = () => ({
     });
 
     return data as Order[];
+  },
+  async getByOrderStatus(status: OrderStatusEnum, userId: number) {
+    const orders = await this.getAll({ orderStatusId: status, userId });
+    return orders[0];
   },
 });
