@@ -29,12 +29,10 @@
 
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
-import { useOrderRequest } from 'src/requests/order';
 import { useProductsRequests } from 'src/requests/products';
 import { useOrderDetailsStore } from 'src/stores/orderDetails';
-import { OrderStatusEnum } from 'src/stores/orderStatus';
+import { useOrderStore } from 'src/stores/orders';
 import { Product } from 'src/stores/products';
-import { useUserStore } from 'src/stores/users';
 import {
   defineProps, onMounted, ref, toRefs,
 } from 'vue';
@@ -51,13 +49,11 @@ const {
 } = toRefs(props);
 
 const product = ref<Product>({} as Product);
-const orderId = ref<number>(0);
 
-const userStore = useUserStore();
-const { currentUser } = storeToRefs(userStore);
+const orderStore = useOrderStore();
+const { currentOrder } = storeToRefs(orderStore);
 
 const productRequest = useProductsRequests();
-const orderRequest = useOrderRequest();
 
 const {
   incrementQuantity, decrementQuantity, deleteById,
@@ -65,25 +61,19 @@ const {
 
 onMounted(async () => {
   product.value = await productRequest.getById(productId.value);
-  const order = await orderRequest.getByOrderStatus(
-    OrderStatusEnum.created,
-    currentUser.value.id,
-  );
-
-  orderId.value = order.id;
 });
 
 const increment = async () => {
   if (product.value.quantity > quantity.value) {
-    await incrementQuantity(orderId.value, id.value, quantity.value);
+    await incrementQuantity(currentOrder.value.id, id.value, quantity.value);
   }
 };
 
 const decrement = async () => {
   if (quantity.value > 1) {
-    await decrementQuantity(orderId.value, id.value, quantity.value);
+    await decrementQuantity(currentOrder.value.id, id.value, quantity.value);
   } else {
-    await deleteById(orderId.value, id.value);
+    await deleteById(currentOrder.value.id, id.value);
   }
 };
 </script>

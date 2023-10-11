@@ -51,38 +51,33 @@
 
 <script lang="ts" setup>
 import { matShoppingBasket } from '@quasar/extras/material-icons';
-import { useOrderRequest } from 'src/requests/order';
 import { useOrderDetailsStore } from 'stores/orderDetails';
 import {
   onMounted, ref, watch,
 } from 'vue';
-import { OrderStatusEnum } from 'stores/orderStatus';
 import { storeToRefs } from 'pinia';
 import { isAxiosError } from 'axios';
 import { useUserStore } from 'stores/users';
-import { Order, useOrderStore } from 'stores/orders';
+import { useOrderStore } from 'stores/orders';
 import { useRouter } from 'vue-router';
 import DefaultBtn from '../Buttons/DefaultBtn.vue';
 import ShoppingBasketCard from './ShoppingBasketCard.vue';
 
 const router = useRouter();
 
-const orderRequest = useOrderRequest();
-
 const orderDetailsStore = useOrderDetailsStore();
 const { getCount, sortByPositionNumber, getTotalPrice } = storeToRefs(orderDetailsStore);
 
 const userStore = useUserStore();
-const { currentUser, userIsAuth } = storeToRefs(userStore);
+const { userIsAuth } = storeToRefs(userStore);
 
 const orderStore = useOrderStore();
-const { orders } = storeToRefs(orderStore);
+const { orders, currentOrder } = storeToRefs(orderStore);
 
 const dialog = ref<boolean>(false);
 const position = ref<'top' | 'right'>('right');
 
 const orderDetailsCount = ref<string>('');
-const currentOrder = ref<Order>({} as Order);
 
 const open = (pos: 'top' | 'right') => {
   if (userIsAuth.value && getCount.value > 0) {
@@ -93,19 +88,13 @@ const open = (pos: 'top' | 'right') => {
   }
 };
 
-const updateOrderDetails = async () => {
-  currentOrder.value = await orderRequest.getByOrderStatus(
-    OrderStatusEnum.created,
-    currentUser.value.id,
-  );
-
-  await orderDetailsStore.fetchAll(currentOrder.value.id);
-};
-
 onMounted(async () => {
   try {
     if (userIsAuth.value) {
-      await updateOrderDetails();
+      await orderStore.getCurrentOrder();
+
+      await orderDetailsStore.fetchAll(currentOrder.value.id);
+
       orderDetailsCount.value = getCount.value.toString();
     }
   } catch (error) {
@@ -128,13 +117,13 @@ const deleteAllOrderDetails = () => {
   orderDetailsCount.value = '0';
 };
 
-watch(() => orderStore.orders.length, () => {
+watch(() => orders.value.length, () => {
   orderDetailsStore.fetchAll(orders.value[0].id);
 });
 
 watch(() => userIsAuth.value, async (value) => {
   if (value) {
-    await updateOrderDetails();
+    await orderDetailsStore.fetchAll(currentOrder.value.id);
 
     orderDetailsCount.value = getCount.value.toString();
   } else {
