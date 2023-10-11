@@ -5,6 +5,8 @@ import {
 } from 'vue-router';
 
 import { useUserStore } from 'stores/users';
+import { useOrderStore } from 'src/stores/orders';
+import { useOrderDetailsStore } from 'src/stores/orderDetails';
 import routes from './routes';
 
 export default route(() => {
@@ -21,17 +23,40 @@ export default route(() => {
     next: NavigationGuardNext,
   ) => {
     const userStore = useUserStore();
+    const orderStore = useOrderStore();
+    const orderDetailsStore = useOrderDetailsStore();
+
+    const isAuth = to.meta.requiresAuth;
+    const isOrderDetailsLength = to.meta.orderDetailsLength;
 
     try {
       await userStore.authUser();
 
-      if (to.meta.requiresAuth === false) {
-        next('/products');
-      } else {
-        next();
+      switch (isAuth) {
+        case false:
+          next('/products');
+          break;
+
+        case true:
+          if (isOrderDetailsLength === true) {
+            try {
+              await orderStore.getCurrentOrder();
+              await orderDetailsStore.fetchAll(orderStore.currentOrder.id);
+            } catch {
+              next('/products');
+              break;
+            }
+          }
+
+          next();
+          break;
+
+        default:
+          next();
+          break;
       }
     } catch {
-      if (to.meta.requiresAuth) {
+      if (isAuth) {
         next('/log-in');
       } else {
         next();
