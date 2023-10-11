@@ -59,7 +59,9 @@ const { currentUser } = storeToRefs(userStore);
 const productRequest = useProductsRequests();
 const orderRequest = useOrderRequest();
 
-const { incrementQuantity, decrementQuantity } = useOrderDetailsStore();
+const {
+  incrementQuantity, decrementQuantity, deleteById,
+} = useOrderDetailsStore();
 
 onMounted(async () => {
   product.value = await productRequest.getById(productId.value);
@@ -72,11 +74,17 @@ onMounted(async () => {
 });
 
 const increment = async () => {
-  await incrementQuantity(orderId.value, id.value, quantity.value);
+  if (product.value.quantity > quantity.value) {
+    await incrementQuantity(orderId.value, id.value, quantity.value);
+  }
 };
 
 const decrement = async () => {
-  await decrementQuantity(orderId.value, id.value, quantity.value);
+  if (quantity.value > 1) {
+    await decrementQuantity(orderId.value, id.value, quantity.value);
+  } else {
+    await deleteById(orderId.value, id.value);
+  }
 };
 </script>
 

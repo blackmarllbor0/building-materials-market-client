@@ -32,15 +32,14 @@ export const useOrderDetailsRequest = () => ({
     return data;
   },
   async decrementQuantity(orderId: number, orderDetailId: number, prevValue: number) {
-    if (!(prevValue < 1)) {
-      const { data } = await api.patch(
-        `/orders/${orderId}/order-details/${orderDetailId}`,
-        { quantity: prevValue - 1 },
-      );
+    const { data } = await api.patch(
+      `/orders/${orderId}/order-details/${orderDetailId}`,
+      { quantity: prevValue - 1 },
+    );
 
-      return data;
-    }
-
-    return 0;
+    return data;
+  },
+  async deleteById(orderId: number, orderDetailId: number) {
+    await api.delete(`/orders/${orderId}/order-details/${orderDetailId}`);
   },
 });

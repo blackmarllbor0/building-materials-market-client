@@ -47,5 +47,14 @@ export const useOrderDetailsStore = defineStore('orderDetails', {
 
       await this.fetchAll(orderId);
     },
+    async deleteById(orderId: number, orderDetailId: number) {
+      await orderDetailRequest.deleteById(orderId, orderDetailId);
+
+      try {
+        await this.fetchAll(orderId);
+      } catch {
+        this.orderDetails = [];
+      }
+    },
   },
 });
