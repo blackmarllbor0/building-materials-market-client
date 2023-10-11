@@ -8,7 +8,6 @@ const routes: RouteRecordRaw[] = [
       { path: '/products', component: () => import('pages/IndexPage.vue') },
       { path: '/about-us', component: () => import('pages/AboutUs.vue') },
       { path: '/categories', component: () => import('pages/CategoriesPage.vue') },
-      // { path: '/'}
       {
         path: '/log-in',
         meta: { requiresAuth: false },
@@ -22,13 +21,18 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/profile',
         meta: { requiresAuth: true },
-        component: () => import('pages/ProfilePage.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('pages/User/ProfilePage.vue'),
+          },
+          {
+            path: 'change',
+            component: () => import('pages/User/ChangeUserData.vue'),
+          },
+        ],
       },
-      {
-        path: '/profile/change',
-        meta: { requiresAuth: true },
-        component: () => import('pages/User/ChangeUserData.vue'),
-      },
+
     ],
   },
   {
