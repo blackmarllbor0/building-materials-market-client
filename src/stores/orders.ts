@@ -1,7 +1,10 @@
-import { OrderBody, OrderParams, useOrderRequest } from 'src/requests/order';
+import {
+  DeliveryBody, OrderBody, OrderParams, useOrderRequest,
+} from 'src/requests/order';
 import { defineStore } from 'pinia';
 import { OrderStatusEnum } from './orderStatus';
 import { useUserStore } from './users';
+import { OrderPaymentTypeEnum } from './orderPaymentType';
 
 export interface Order {
   id: number;
@@ -36,6 +39,12 @@ export const useOrderStore = defineStore('orders', {
         OrderStatusEnum.created,
         userStore.currentUser.id,
       );
+    },
+    async updatePaymentType(paymentType: OrderPaymentTypeEnum) {
+      this.currentOrder = await orderRequest.updatePaymentType(this.currentOrder.id, paymentType);
+    },
+    async decorationOrder(deliveryBody?: DeliveryBody) {
+      this.currentOrder = await orderRequest.decorationOrder(this.currentOrder.id, deliveryBody);
     },
   },
 });

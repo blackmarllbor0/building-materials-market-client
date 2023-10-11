@@ -1,5 +1,6 @@
 <template>
   <q-form
+    v-model="inputValue"
     class="row"
     @submit.prevent="false"
   >
@@ -10,6 +11,7 @@
       :label-color="labelColor"
       :label="label"
       :style="`width: ${width}; font-size: ${fontSize}`"
+      :disable="disable"
     />
   </q-form>
 </template>
@@ -18,13 +20,14 @@
 import { ref } from 'vue';
 
 const {
-  labelColor, color,
+  labelColor, color, disable,
 } = defineProps<{
   labelColor?: string,
   color?: string,
   label?: string,
   width?: string,
   fontSize?: string,
+  disable?: boolean,
 }>();
 
 const inputValue = ref<string>('');

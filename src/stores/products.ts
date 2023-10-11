@@ -9,7 +9,7 @@ export interface Product {
   price: number;
   rating: number;
   isDeleted: number;
-  linkToImage: string;
+  linkToImages: string;
   title: string;
   description: string;
 }

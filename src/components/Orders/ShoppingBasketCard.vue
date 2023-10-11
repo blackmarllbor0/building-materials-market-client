@@ -3,6 +3,13 @@
     class="order-detail row justify-between"
     style="width: auto; align-content: center;"
   >
+    <q-card-section>
+      <img
+        v-if="product.linkToImages"
+        width="15px"
+      >
+    </q-card-section>
+
     <q-card-section
       class="row items-center no-wrap card-info"
       style="flex: 1;"

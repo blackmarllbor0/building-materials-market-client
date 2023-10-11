@@ -49,6 +49,7 @@ module.exports = {
     'no-confusing-arrow': 'off',
     'implicit-arrow-linebreak': 'off',
     'no-restricted-syntax': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
 
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'error',

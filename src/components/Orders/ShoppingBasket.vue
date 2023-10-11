@@ -34,6 +34,7 @@
             color="white"
             :title="`Place an order - ${getTotalPrice}$`"
             style="width: auto"
+            @click="registerOrder"
           />
 
           <default-btn
@@ -115,6 +116,10 @@ const deleteAllOrderDetails = () => {
 
   dialog.value = false;
   orderDetailsCount.value = '0';
+};
+
+const registerOrder = () => {
+  router.push('/order-register');
 };
 
 watch(() => orders.value.length, () => {
