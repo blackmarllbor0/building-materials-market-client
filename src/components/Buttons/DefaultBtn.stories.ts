@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import DefaultBtn from './DefaultBtn.vue';
 
 const meta: Meta<typeof DefaultBtn> = {
-  title: 'Buttons/DefaultBtn',
+  title: 'components/Buttons/DefaultBtn',
   component: DefaultBtn,
   argTypes: {
     bgColor: { control: 'color' },

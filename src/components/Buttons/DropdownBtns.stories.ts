@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import DropdownBtns from './DropdownBtns.vue';
 
 const meta: Meta<typeof DropdownBtns> = {
-  title: 'Buttons/DropdownBtns',
+  title: 'components/Buttons/DropdownBtns',
   component: DropdownBtns,
   tags: ['autodocs'],
   argTypes: {
@@ -21,7 +21,7 @@ const meta: Meta<typeof DropdownBtns> = {
   args: {
     label: 'Button',
     color: 'red',
-    list: [{ id: 1, name: 'One', click: () => { /** event clicker */ } }],
+    list: [{ id: 1, name: 'One', click: (...args: any) => { /** event clicker */ } }],
   },
 };
 

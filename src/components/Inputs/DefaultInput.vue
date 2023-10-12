@@ -11,7 +11,7 @@
       :label-color="labelColor"
       :label="label"
       :style="`width: ${width}; font-size: ${fontSize}`"
-      :disable="disable"
+      :disable="disable || false"
     />
   </q-form>
 </template>
